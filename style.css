@@ -1,0 +1,31 @@
+/* Styles go here */
+
+.square {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  box-shadow: 2px 2px 8px .5px gray;
+  float: left;
+  position: relative;
+  margin: 8px 0px 0px 8px;
+  font-size: 4.5em;
+  text-align: center;
+  text-shadow: 2px 2px 5px gray;
+}
+.breaker {
+  clear: left;
+}
+
+.circle:after {
+  content: 'O';
+  color: darkblue;
+}
+
+.x:after {
+  content: 'X';
+  color: darkred;
+}
+
+.winner {
+  box-shadow: 2px 2px 8px .5px darkgreen;
+}
