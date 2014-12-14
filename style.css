@@ -63,6 +63,7 @@ body {
 
 #game-info {
   width: 100%;
+  height: 1em;
   float: left;
   padding-left: 8px;
 }

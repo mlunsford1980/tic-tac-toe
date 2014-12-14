@@ -7,21 +7,21 @@ function repeat(action, iterations) {
 }
 
 function TurnController(firstPlayer, difficulty) {
-  this.currentUser = firstPlayer;
+  this.currentplayer = firstPlayer;
   var that = this;
   
   this.newTurn = function() {
-    this.currentUser = this.currentUser === 'x' ? 'circle' : 'x';
-    $('#status').text(this.currentUser + ' is thinking...');
+    this.currentplayer = this.currentplayer === 'x' ? 'circle' : 'x';
+    $('#status').text(this.currentplayer + ' is thinking...');
     setTimeout(this.emitTurnEvent, 500, difficulty);
   }
   
   this.emitTurnEvent = function(difficulty) {
-    radio('newTurnEvent').broadcast(that.currentUser, difficulty);
+    radio('newTurnEvent').broadcast(that.currentplayer, difficulty);
   }
   
   this.initialize = function() {
-    $('#user-indicator').text(this.currentUser === 'x' ? 'X' : 'O');
+    $('#player-indicator').text(this.currentplayer === 'x' ? 'X' : 'O');
   }
 }
 
@@ -30,11 +30,11 @@ function ComputerPlayer(player, gameBoard) {
   this.gameBoard = gameBoard;
   var that = this;
   
-  this.newTurnEventHandler = function(user, difficulty) {
-    if (user == that.player) {
-      var gamePiece = gameBoard.findBestPiece(user, difficulty);
+  this.newTurnEventHandler = function(player, difficulty) {
+    if (player == that.player) {
+      var gamePiece = gameBoard.findBestPiece(player, difficulty);
       if (gamePiece === null || gamePiece === undefined) {
-        gameBoard.endGame('No more available pieces!');
+        gameBoard.endGame('No more available moves!');
       } else {
         gamePiece.square.trigger('click');
       }

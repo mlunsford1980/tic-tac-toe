@@ -1,4 +1,6 @@
 function GamePiece(board, target, controller, x, y) {
+  var that = this,
+      square = $(target);
   this.x = x;
   this.y = y;
   this.adjacentPieces = {
@@ -11,8 +13,6 @@ function GamePiece(board, target, controller, x, y) {
     sw: null,
     nw: null
   };
-  var that = this;
-  var square = $(target);
   this.square = square;
   
   this.owner = function() {
@@ -27,14 +27,14 @@ function GamePiece(board, target, controller, x, y) {
     return !square.hasClass('x') && !square.hasClass('circle');
   }
   
-  this.claimForUser = function (user) {
-    square.addClass(user); 
-    $('#user-indicator').text(user === 'x' ? 'X' : 'O');
+  this.claimForplayer = function (player) {
+    square.addClass(player); 
+    $('#player-indicator').text(player === 'x' ? 'O' : 'X');
   }
   
   this.makeMove = function() {
     if (that.isAvailable()) {
-      that.claimForUser(controller.currentUser);
+      that.claimForplayer(controller.currentplayer);
       if (!board.searchForWin()) {
         controller.newTurn();
       }
@@ -42,8 +42,8 @@ function GamePiece(board, target, controller, x, y) {
   }
   
   this.isAdjacent = function(x, y) {
-    var xDistance = Math.abs(x-this.x);
-    var yDistance = Math.abs(y-this.y);
+    var xDistance = Math.abs(x-this.x),
+        yDistance = Math.abs(y-this.y);
     return xDistance <= 1 && yDistance <= 1 && (xDistance+yDistance) !== 0;
   } 
   

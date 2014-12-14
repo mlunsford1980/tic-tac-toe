@@ -32,17 +32,18 @@ function GameBoard(parent,size, controller) {
   }
   
   this.createBoard = function() {
-    var createRow = function() {
-      that.x = 0;
-      _.times(size, that.createSquare);
-      that.y += 1;
-    }
-    _.times(size, createRow);
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        radio('newGamePieceEvent').broadcast(that.board[x][y]);
+    _.times(size*size, function() {
+      var startNewRow = that.x > 0 && that.x % size === 0;
+      if (startNewRow) {
+        that.x = 0;
+        that.y++;
       }
-    }
+      that.createSquare();
+    });
+    
+    _.forEach(_.flatten(that.board), function(gamePiece) {
+        radio('newGamePieceEvent').broadcast(gamePiece);
+    });
   }
   
   this.searchForWin = function() {
@@ -76,13 +77,13 @@ function GameBoard(parent,size, controller) {
     return winDetected;
   }
   
-  this.searchInDirection = function(user, start, direction) {
+  this.searchInDirection = function(player, start, direction) {
     var startOwner = start.owner();
-    if (startOwner !== user) {
+    if (startOwner !== player) {
       return false;
     }
     
-    if (startOwner === user && start.adjacentPieces[direction] === null) {
+    if (startOwner === player && start.adjacentPieces[direction] === null) {
       return true;
     } else {
       return that.searchInDirection(startOwner, start.adjacentPieces[direction], direction);
@@ -95,16 +96,19 @@ function GameBoard(parent,size, controller) {
     $('#game-board span').off();
     
     $('#status').text(message);
+    $('#game-info').text('');
   }
   
   this.displayWinInDirection = function(start, direction) {
+    var id;
     while (start !== null) {
-      $('#' + start.x + '-' + start.y).addClass('winner');
+      id = '#' + start.x + '-' + start.y;
+      $(id).addClass('winner');
       start = start.adjacentPieces[direction];
     }
   } 
   
-  this.findBestPiece = function(user, difficulty) {
+  this.findBestPiece = function(player, difficulty) {
     var availPieces = that.findAvailablePieces(),
         numPieces = availPieces.length,
         bestPiece = null,
@@ -130,8 +134,8 @@ function GameBoard(parent,size, controller) {
     }
     
     if (difficulty === 'hard') {
-      var winningPiece = that.findWinningPiece(user);
-      var winningPiece = winningPiece || that.findWinningPiece((user === 'x' ? 'circle' : 'x'));
+      var winningPiece = that.findWinningPiece(player);
+      winningPiece = winningPiece || that.findWinningPiece((player === 'x' ? 'circle' : 'x'));
       
       if (winningPiece) {
         bestPiece = winningPiece;
@@ -157,34 +161,34 @@ function GameBoard(parent,size, controller) {
     return _.filter(_.flatten(that.board), isAvailable);
   }
   
-  this.findWinningPiece = function(user) {
+  this.findWinningPiece = function(player) {
     var gamePiece = null, 
         winningPiece = null;
         
     for (var i = 0; i < size; i++) {
       gamePiece = that.board[0][i];
-      winningPiece = winningPiece || that.findWinningPieceInDirection(gamePiece, 'e', user);
+      winningPiece = winningPiece || that.findWinningPieceInDirection(gamePiece, 'e', player);
       
       gamePiece = that.board[i][0];
-      winningPiece = winningPiece || that.findWinningPieceInDirection(gamePiece, 's', user);
+      winningPiece = winningPiece || that.findWinningPieceInDirection(gamePiece, 's', player);
     }
       
     gamePiece = that.board[0][0];
-    winningPiece = winningPiece || that.findWinningPieceInDirection(gamePiece, 'se', user);
+    winningPiece = winningPiece || that.findWinningPieceInDirection(gamePiece, 'se', player);
     
     gamePiece = that.board[0][size-1];
-    winningPiece = winningPiece || that.findWinningPieceInDirection(gamePiece, 'ne', user);
+    winningPiece = winningPiece || that.findWinningPieceInDirection(gamePiece, 'ne', player);
     
     return winningPiece;
   }
   
-  this.findWinningPieceInDirection = function(start, direction, user) {
-    var userPieces = [],
+  this.findWinningPieceInDirection = function(start, direction, player) {
+    var playerPieces = [],
         availPieces = [];
         
     while (start !== null) {
-      if (start.owner() === user) {
-        userPieces.push(start);
+      if (start.owner() === player) {
+        playerPieces.push(start);
       }
       
       if (start.owner() !== 'circle' && start.owner() !== 'x') {
@@ -193,7 +197,7 @@ function GameBoard(parent,size, controller) {
       start = start.adjacentPieces[direction];
     }
     
-    if (userPieces.length === size - 1 && availPieces.length === 1) {
+    if (playerPieces.length === size - 1 && availPieces.length === 1) {
       return availPieces[0];
     } else {
       return null;
