@@ -1,0 +1,163 @@
+/* Styles go here */
+
+body {
+  font-family: arial;
+  text-align: center;
+}
+
+.square {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  box-shadow: 2px 2px 8px .5px gray;
+  float: left;
+  position: relative;
+  margin: 8px 0 0 8px;
+  font-size: 4.5em;
+  text-align: center;
+  text-shadow: 2px 2px 5px gray;
+  padding-bottom: 10px;
+}
+.breaker {
+  clear: left;
+}
+
+.circle:after {
+  content: 'O';
+  color: darkblue;
+}
+
+.x:after {
+  content: 'X';
+  color: darkred;
+}
+
+.winner {
+  box-shadow: 2px 2px 8px .5px darkgreen;
+}
+
+.clear {
+  clear: both;
+}
+
+.blanket {
+    position: absolute;
+    width:100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 9998;
+    background-color:#111;
+    opacity: 0.65;
+    filter:alpha(opacity=65);
+}
+
+#container {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+#container h1 {
+  text-align: center;
+}
+
+#game-info {
+  width: 100%;
+  height: 1em;
+  float: left;
+  padding-left: 8px;
+}
+
+#status {
+  height: 1em;
+  text-align: center;
+}
+
+#difficulty-selector {
+  float: right;
+  padding-right: 8px;
+}
+
+#game-settings {
+  padding-left: 8px;
+}
+
+#game-settings-modal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: -53px auto 0 auto;
+  z-index: 9999;
+  top: 50%;
+  border-radius: 10px;
+  width: 180px;
+  height: auto;
+  background-color: lightblue;
+  border: solid thick darkblue;
+  padding: 10px;
+  animation-duration: 3s;
+  animation-name: slidein;
+  -moz-animation-duration: 3s;
+  -webkit-animation-duration: 1s;
+  -moz-animation-name: slidein;
+  -webkit-animation-name: slidein;
+} 
+
+#game-settings-modal label {
+  float: left;
+  clear: left;
+  width: 110px;
+}
+
+#game-settings-modal input, #game-settings-modal select {
+  float: left;
+}
+
+#game-settings-modal input[type=checkbox] {
+  float: left;
+  margin-left: 0;
+}
+
+#game-settings-modal .submit-container {
+  text-align: center;
+}
+
+#game-settings-modal input[type=button] {
+  float: none;
+  margin-top: 10px;
+}
+
+#game-settings-modal h3 {
+  margin: 9px 0;
+}
+
+@keyframes slidein {
+  from {
+    top: -300px;
+  }
+
+  to {
+    top: 50%;
+  }
+}
+
+@-moz-keyframes slidein {
+  from {
+    top: -300px;
+  }
+
+  to {
+    top: 50%;
+  }
+}
+
+@-webkit-keyframes slidein {
+  from {
+    top: -300px;
+  }
+
+  to {
+    top: 50%;
+  }
+}
+
