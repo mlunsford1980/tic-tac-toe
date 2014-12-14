@@ -1,5 +1,5 @@
 # Tic-Tac-Toe
-This is a simple Tic-Tac-Toe game written in (mostly) plain JS and a bit of jQuery and Lo-Dash.
+This is a simple Tic-Tac-Toe game written in (mostly) plain JS and a bit of jQuery, Lo-Dash and Radio.js.
 
 ##Features
 * Choose the size of the board.
