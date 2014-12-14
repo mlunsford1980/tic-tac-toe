@@ -3,5 +3,5 @@ This is a simple Tic-Tac-Toe game written in (mostly) plain JS and a bit of jQue
 
 ##Features
 * Choose the size of the board.
-* Choose whether Xs or Os are the first player.
+* Choose whether X or O is the first player.
 * A two-mode AI that you can assign to player 1 or 2.  You can even assign the AI to both players and watch them duke it out!
