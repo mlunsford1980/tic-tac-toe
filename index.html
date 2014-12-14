@@ -4,6 +4,7 @@
   <head>
     <script data-require="jquery@*" data-semver="2.1.1" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
     <script src="radio.js"></script>
     <script src="script.js"></script>
     <script src="gameboard.js"></script>
@@ -11,11 +12,38 @@
   </head>
 
   <body>
-    <h1>Tic-Tac-Toe</h1>
-    <div>Current User: <span id="user-indicator"></span></div>
-    <div id="result"></div>
-    
-    <div id="foo"></div>
+    <div class='blanket'>&nbsp;</div>
+    <div id="game-settings-modal">
+        <h3>Settings:</h3>
+        <label for="board-size">Board size: </label>
+        <input id="board-size" type="text" size="1" value="3">
+        <label for="first-player">Player 1: </label>
+        <select id='first-player'>
+          <option>--</option>
+          <option value='x'>X</option>
+          <option value='circle' selected>circle</option>
+        </select>
+        <label for="player1-ai">Player 1 AI?</label>
+        <input id="player1-ai" value="true" type="checkbox">
+        <label for="player2-ai">Player 2 AI?</label>
+        <input id="player2-ai" value="true" type="checkbox">
+        <label for="difficulty">Hard?</label>
+        <input id="difficulty" type="checkbox" value="hard">
+        <div class="submit-container">
+          <input id="start-game" type="button" value="Start Game">
+        </div>
+    </div>
+    <div id="container">
+      <h1>Tic-Tac-Toe</h1>
+      <div id="status"></div>
+      <span id="game-info">
+        Current Player: <span id="user-indicator"></span> 
+      </span>
+      <span id="game-board"></span>
+      <span id="game-settings">
+      </span>
+      
+    </div>
   </body>
 
 </html>

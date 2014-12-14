@@ -35,8 +35,9 @@ function GamePiece(board, target, controller, x, y) {
   this.makeMove = function() {
     if (that.isAvailable()) {
       that.claimForUser(controller.currentUser);
-      board.searchForWin();
-      controller.newTurn();
+      if (!board.searchForWin()) {
+        controller.newTurn();
+      }
     }
   }
   
